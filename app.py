@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 import subprocess
 import threading
 import re
@@ -56,7 +56,8 @@ class App:
         # Start download in a separate thread
         threading.Thread(target=self.run_ffmpeg, args=(url,), daemon=True).start()
 
-    def validate_url(self, url):
+    @staticmethod
+    def validate_url(url):
         """Check if the .m3u8 URL is valid and accessible."""
         try:
             response = requests.head(url, timeout=5)
@@ -148,7 +149,8 @@ class App:
                 self.show_error("Download stalled. Please check the URL and try again.")
                 self.root.after(0, self.enable_ui)        
 
-    def time_to_seconds(self, time_str):
+    @staticmethod
+    def time_to_seconds(time_str):
         """Convert time in HH:MM:SS format to seconds."""
         h, m, s = map(float, time_str.split(':'))
         return h * 3600 + m * 60 + s
@@ -164,7 +166,8 @@ class App:
         self.url_entry.config(state='normal')
         self.download_button.config(state='normal')
 
+
 if __name__ == '__main__':
-    root = tk.Tk()
-    app = App(root)
-    root.mainloop()
+    rk_root = tk.Tk()
+    app = App(rk_root)
+    rk_root.mainloop()
